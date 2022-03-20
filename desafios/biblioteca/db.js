@@ -78,12 +78,32 @@ export async function insertBookAuthor(author_id, book_id) {
     }
 
 }
+
 export async function readBookWithId(bookId) {
     const client = await pool.connect()
     try {
         const { rows } = await client.query({
             text: "select * from books where id=$1",
             values: [bookId],
+            name: 'select-with-id'
+        })
+        client.release()
+        console.log(rows);
+        return rows[0]
+    } catch (err) {
+        console.log(err);
+        client.release()
+
+    }
+}
+
+
+export async function readAuthorWithId(authorId) {
+    const client = await pool.connect()
+    try {
+        const { rows } = await client.query({
+            text: "select * from authors where id=$1",
+            values: [authorId],
             name: 'select-with-id'
         })
         client.release()

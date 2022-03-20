@@ -1,7 +1,7 @@
 import express from "express";
 // import router from "./routes/api.js";
 import path from "path";
-import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readBooks, readBookWithId } from "./db.js";
+import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readAuthorWithId, readBooks, readBookWithId } from "./db.js";
 import nunjucks from "nunjucks"
 
 const app = express();
@@ -50,6 +50,19 @@ app.get('/books/:book_id', async(req, res) => {
 
     }
 })
+app.get('/authors/:author_id', async(req, res) => {
+    const authorId = parseInt(req.params.author_id);
+    try {
+        const author = await readAuthorWithId(authorId)
+        res.render('author.html', { author })
+
+    } catch (err) {
+        console.log(err);
+        res.json(err)
+
+    }
+})
+
 
 app.get('/authors', async(req, res) => {
     const authors = await readAuthors()
