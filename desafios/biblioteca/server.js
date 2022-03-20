@@ -43,8 +43,10 @@ app.get('/books/:book_id', async(req, res) => {
     try {
         const book = await readBookWithId(bookId)
         const authors = await searchAuthors(bookId)
+        const authorsList = await readAuthors();
+        console.log(authorsList);
         console.log(authors);
-        res.render('book.html', { book, authors })
+        res.render('book.html', { book, authors, authorsList })
 
     } catch (err) {
         console.log(err);
@@ -58,8 +60,10 @@ app.get('/authors/:author_id', async(req, res) => {
     try {
         const author = await readAuthorWithId(authorId)
         const books = await searchBooks(authorId);
-        console.log(books);
-        res.render('author.html', { author, books })
+        const booksList = await readBooks();
+        // console.log(booksList);
+        // console.log(books);
+        res.render('author.html', { author, books, booksList })
 
     } catch (err) {
         console.log(err);

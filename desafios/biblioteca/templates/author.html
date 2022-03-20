@@ -16,7 +16,7 @@
                 <a class="nav-link " aria-current="page" href="/">Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="#">Authors</a>
+                <a class="nav-link " href="/authors">Authors</a>
             </li>
         </ul>
     </div>
@@ -33,12 +33,31 @@
                 </div>
             </div>
         </div>
-        <p class="fw-bold mt-2">Books</p>
-        <ul class="list-group list-group flush">
-            {%for book in books%}
-            <li class="list-group-item">{{book.title}}</li>
-            {%endfor%}
-        </ul>
+        <div>
+            <p class="fw-bold mt-2">Books</p>
+            <ul class="list-group list-group-flush">
+                {%for book in books%}
+                <li class="list-group-item">{{book.title}}</li>
+                {%endfor%}
+            </ul>
+        </div>
+        <div>
+            <p class="fw-bolder">Add a book</p>
+            <div class="input-group">
+                <select class="form-select input-group" aria-label="Default select example">
+                    <option selected disabled>select book</option>
+                    {% for bookli in booksList %}
+                    {% for book in books %}
+                    {% if bookli.title!=book.title %}
+                    <option value="{{bookli.id}}">{{bookli.title}}</option>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-primary btn-lg">Add Book</button>
+            </div>
+        </div>
+
     </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
     <script src="/js/bootstrap.min.js"></script>

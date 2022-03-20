@@ -88,7 +88,7 @@ export async function readBookWithId(bookId) {
             name: 'select-with-book-id'
         })
         client.release()
-        console.log(rows);
+            // console.log(rows);
         return rows[0]
     } catch (err) {
         console.log(err);
