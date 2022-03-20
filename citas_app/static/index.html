@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h3 class="mt-4 p-4 text-center">Citas famosas</h3>
+        <ul id="citas"></ul>
+    </div>
+    <script src="js/bootsrap.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script>
+        //funcin que al cargar el temlate llama a la api d ecitas
+
+        async function init() {
+            const {
+                data
+            } = await axios.get('./api/citas')
+
+            const citas_ul = document.getElementById('citas')
+            data.map(cita => `<li><b>${cita.cita}</b> <i>${cita.autor}</i></li>`).join(' ');
+
+            console.log(data);
+        }
+    </script>
+</body>
+
+</html>

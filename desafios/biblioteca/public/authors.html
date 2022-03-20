@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Books & Authors</title>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="index.html">Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Authors</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-6">
+                <h3>Add an Author</h3>
+                <form action="/api/authors" method="post">
+                    <div class="mb-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Firstname</span>
+                            <input type="text" name="firstname" id="firstname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Lastname</span>
+                                <input type="text" name="lastname" id="lastname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+
+                            <div class="input-group">
+                                <span class="input-group-text">notes</span>
+                                <textarea class="form-control" aria-label="With textarea" name="notes" id="notes"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+                </div>
+            </div>
+            <div class="col-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Author</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="authors">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script>
+        async function getAuthors() {
+            const {
+                data
+            } = await axios.get('api/authors')
+            console.log(data);
+            $('#authors').html("");
+
+            $.each(data, (i, c) => {
+                $("#authors").append(`
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${c.firstname} ${c.lastname}</td>
+                        <td><a href="">view</a></td>
+                    </tr>
+
+                `)
+            });
+        }
+
+
+
+
+        getAuthors();
+    </script>
+</body>
+
+</html>
