@@ -33,6 +33,12 @@
                 </div>
             </div>
         </div>
+        <p class="fw-bold">Authors:</p>
+        <ul class="list-group list-group flush">
+            {%for author in authors%}
+            <li class="list-group-item">{{author.firstname}} {{author.lastname}}</li>
+            {%endfor%}
+        </ul>
 
 
     </div>

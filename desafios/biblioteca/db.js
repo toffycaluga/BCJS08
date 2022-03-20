@@ -85,7 +85,7 @@ export async function readBookWithId(bookId) {
         const { rows } = await client.query({
             text: "select * from books where id=$1",
             values: [bookId],
-            name: 'select-with-id'
+            name: 'select-with-book-id'
         })
         client.release()
         console.log(rows);
@@ -102,16 +102,48 @@ export async function readAuthorWithId(authorId) {
     const client = await pool.connect()
     try {
         const { rows } = await client.query({
-            text: "select * from authors where id=$1",
+            text: "select * from authors where id=$1 ",
             values: [authorId],
-            name: 'select-with-id'
+            name: 'select-author-with-id'
         })
         client.release()
-        console.log(rows);
+            // console.log(rows[0]);
         return rows[0]
     } catch (err) {
         console.log(err);
         client.release()
 
+    }
+}
+
+export async function searchAuthors(bookId) {
+    const client = await pool.connect();
+    try {
+        const { rows } = await client.query({
+            text: `select authors.firstname,authors.lastname from books_authors join authors on(author_id=authors.id) where book_id=$1;`,
+            values: [bookId],
+            name: 'select-search-authors'
+        })
+        client.release();
+        return rows;
+    } catch (err) {
+        console.log();
+        client.release();
+    }
+}
+
+export async function searchBooks(authorId) {
+    const client = await pool.connect();
+    try {
+        const { rows } = await client.query({
+            text: `select title from books_authors join books on(book_id=books.id) where author_id=$1;`,
+            values: [authorId],
+            name: 'select-search-books'
+        })
+        client.release();
+        return rows;
+    } catch (err) {
+        console.log();
+        client.release();
     }
 }

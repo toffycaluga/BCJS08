@@ -33,9 +33,16 @@
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        <script src="axios.min.js"></script>
+        <p class="fw-bold mt-2">Books</p>
+        <ul class="list-group list-group flush">
+            {%for book in books%}
+            <li class="list-group-item">{{book.title}}</li>
+            {%endfor%}
+        </ul>
+    </div>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- <script src="/axios.min.js"></script> -->
 
 </body>
 
