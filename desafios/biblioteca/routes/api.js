@@ -1,7 +1,6 @@
 import express from "express";
 import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readBooks } from "../db.js";
-import nunjucks from "nunjucks"
-import path from "path";
+
 
 const router = express.Router();
 
@@ -17,9 +16,9 @@ const router = express.Router();
 
 
 router.get('/books', async(req, res) => {
-    const data = await readBooks()
-    console.log(data);
-    res.json(data)
+    const books = await readBooks()
+    console.log(books);
+    res.render("index.html", { books })
 })
 
 router.post('/books', async(req, res) => {

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books & Authors</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/authors">Authors</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-6">
+                <h3>Add a Book</h3>
+                <form action="/api/books" method="post">
+                    <div class="mb-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                            <input type="text" name="title" id="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+
+                        <div class="input-group">
+                            <span class="input-group-text">Description</span>
+                            <textarea class="form-control" aria-label="With textarea" name="description" id="description"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Book</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="books">
+                        {%for book in books%}
+                        <tr>
+                            <td>{{book.id}}</td>
+                            <td>{{book.title}}</td>
+                            <td>
+                                <a href="#">view</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="axios.min.js"></script>
+
+    <script>
+        // async function getBooks() {
+        //     const {
+        //         data
+        //     } = await axios.get('api/books')
+        //     console.log(data);
+        //     $('.books').html("");
+
+        //     $.each(data, (i, c) => {
+        //         $(".books").append(`
+        //             <tr>
+        //                 <td>${i + 1}</td>
+        //                 <td>${c.title}</td>
+        //                 <td><a href="">view</a></td>
+        //             </tr>
+
+        //         `)
+        //     });
+        // }
+
+
+
+
+        // getBooks();
+    </script>
+
+</body>
+
+
+</html>
