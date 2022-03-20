@@ -17,7 +17,7 @@ export async function readBooks() {
     try {
         const { rows } = await client.query(`select * from books`)
         client.release();
-        console.log(rows);
+        // console.log(rows);
         return rows;
     } catch (err) {
         console.log(err);
@@ -44,7 +44,7 @@ export async function readAuthors() {
     try {
         const { rows } = await client.query(`select * from authors`)
         client.release();
-        console.log(rows);
+        // console.log(rows);
         return rows;
     } catch (err) {
         console.log(err);
@@ -77,4 +77,21 @@ export async function insertBookAuthor(author_id, book_id) {
         console.log(err);
     }
 
+}
+export async function readBookWithId(bookId) {
+    const client = await pool.connect()
+    try {
+        const { rows } = await client.query({
+            text: "select * from books where id=$1",
+            values: [bookId],
+            name: 'select-with-id'
+        })
+        client.release()
+        console.log(rows);
+        return rows[0]
+    } catch (err) {
+        console.log(err);
+        client.release()
+
+    }
 }

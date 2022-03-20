@@ -1,7 +1,7 @@
 import express from "express";
-import router from "./routes/api.js";
+// import router from "./routes/api.js";
 import path from "path";
-import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readBooks } from "./db.js";
+import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readBooks, readBookWithId } from "./db.js";
 import nunjucks from "nunjucks"
 
 const app = express();
@@ -28,7 +28,7 @@ app.get('/', async(req, res) => {
     res.render("index.html", { books })
 })
 
-app.post('/api/books', async(req, res) => {
+app.post('/books', async(req, res) => {
     console.log(req.body);
     const data = req.body
     await insertBook(data.title, data.description)
@@ -38,11 +38,24 @@ app.post('/api/books', async(req, res) => {
 
 
 })
+app.get('/books/:book_id', async(req, res) => {
+    const bookId = parseInt(req.params.book_id);
+    try {
+        const book = await readBookWithId(bookId)
+        res.render('book.html', { book })
+
+    } catch (err) {
+        console.log(err);
+        res.json(err)
+
+    }
+})
+
 app.get('/authors', async(req, res) => {
     const authors = await readAuthors()
     res.render('authors.html', { authors })
 })
-router.post('/authors', async(req, res) => {
+app.post('/authors', async(req, res) => {
     console.log(req.body);
     const data = req.body
     await insertAuthors(data.firstname, data.lastname, data.notes)
@@ -51,7 +64,7 @@ router.post('/authors', async(req, res) => {
     res.status(201).redirect('/authors.html')
 })
 
-router.post('/escribir/:book_id/:author_id', async(req, res) => {
+app.post('/escribir/:book_id/:author_id', async(req, res) => {
         const datos = req.params
         await insertBookAuthor(datos.author_id, datos.book_id)
 
