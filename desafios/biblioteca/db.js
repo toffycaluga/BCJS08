@@ -132,6 +132,26 @@ export async function searchAuthors(bookId) {
     }
 }
 
+export async function searchAuthorsNotbooks(bookId) {
+    const client = await pool.connect();
+    try {
+        const { rows } = await client.query({
+            text: `select id,firstname,lastname from books where id not in(select author_id from books_authors where book_id=$1);`,
+            values: [bookId],
+            name: 'select-search-not-authors'
+        })
+        client.release();
+        return rows;
+    } catch (err) {
+        console.log();
+        client.release();
+    }
+}
+
+
+
+
+
 export async function searchBooks(authorId) {
     const client = await pool.connect();
     try {
@@ -139,6 +159,23 @@ export async function searchBooks(authorId) {
             text: `select title from books_authors join books on(book_id=books.id) where author_id=$1;`,
             values: [authorId],
             name: 'select-search-books'
+        })
+        client.release();
+        return rows;
+    } catch (err) {
+        console.log();
+        client.release();
+    }
+}
+
+
+export async function searchBooksNotWriteBy(authorId) {
+    const client = await pool.connect();
+    try {
+        const { rows } = await client.query({
+            text: ` select id,title from books where id not in(select book_id from books_authors where author_id=$1);`,
+            values: [authorId],
+            name: 'select-search-not-books'
         })
         client.release();
         return rows;

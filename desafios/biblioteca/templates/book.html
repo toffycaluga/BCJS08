@@ -48,15 +48,7 @@
                     <select class="form-select input-group" id="authorSelect" aria-label="Default select example">
                         <option selected disabled>select Author</option>
                         {% for authorli in authorsList%}
-                        {% if authors[0]!='undefined' %}
-                        {% for author in authors %}
-                        {% if authorli.firstname!=author.firstname %}
                         <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
-                        {% endif %}
-                        {% else %}
-                        <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
-                        {% endfor %}
-                        {% endif %}
 
                         {% endfor %}
                     </select>

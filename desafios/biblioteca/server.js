@@ -1,7 +1,7 @@
 import express from "express";
 // import router from "./routes/api.js";
 import path from "path";
-import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readAuthorWithId, readBooks, readBookWithId, searchAuthors, searchBooks } from "./db.js";
+import { insertAuthors, insertBook, insertBookAuthor, readAuthors, readAuthorWithId, readBooks, readBookWithId, searchAuthors, searchAuthorsNotbooks, searchBooks, searchBooksNotWriteBy } from "./db.js";
 import nunjucks from "nunjucks"
 
 const app = express();
@@ -38,13 +38,14 @@ app.post('/books', async(req, res) => {
 
 
 })
+
 app.get('/books/:book_id', async(req, res) => {
     const bookId = parseInt(req.params.book_id);
     try {
         const book = await readBookWithId(bookId)
         const authors = await searchAuthors(bookId)
         console.log(authors[0]);
-        const authorsList = await readAuthors();
+        const authorsList = await searchAuthorsNotbooks(bookId);
         // console.log(authorsList);
         // console.log(authors);
         res.render('book.html', { book, authors, authorsList })
@@ -55,13 +56,14 @@ app.get('/books/:book_id', async(req, res) => {
 
     }
 })
+
 app.get('/authors/:author_id', async(req, res) => {
     const authorId = parseInt(req.params.author_id);
     // console.log(authorId);
     try {
         const author = await readAuthorWithId(authorId)
         const books = await searchBooks(authorId);
-        const booksList = await readBooks();
+        const booksList = await searchBooksNotWriteBy(authorId);
         // console.log(booksList);
         // console.log(books);
         res.render('author.html', { author, books, booksList })
@@ -87,9 +89,16 @@ app.post('/authors', async(req, res) => {
     res.status(201).redirect('/authors')
 })
 
-app.post('/escribir/:book_id/:author_id', async(req, res) => {
+app.post('/escribir/:author_id', async(req, res) => {
         const datos = req.params
-        await insertBookAuthor(datos.author_id, datos.book_id)
+        console.log(req);
+        console.log(req.params);
+        let body = ""
+        req.on('data', data => body += data)
+        req.on('end', async() => {
+                console.log(body);
+            })
+            // await insertBookAuthor(datos.author_id, datos.book_id)
 
         res.json({ todo: 'ok' })
     })
