@@ -25,9 +25,9 @@
             <div class="row">
                 <div class="col-3">
                     <h3>{{book.title}}</h3>
-                    <p class="fw-bold">ID:{{book.id}}</p>
+                    <p class="fw-bold" id="bookId">ID: {{book.id}}</p>
                 </div>
-                <div class="col-9 text-left">
+                <div class="col-9 ">
                     <p class="fw-bold">Description:</p>
                     <p class="pw-lighter">{{book.description}}</p>
                 </div>
@@ -36,33 +36,56 @@
         <p class="fw-bold">Authors:</p>
         <ul class="list-group list-group-flush">
             {%for author in authors%}
-            <li class="list-group-item">{{author.firstname}} {{author.lastname}}</li>
+            <li class="list-group-item fs-4">{{author.firstname}} {{author.lastname}}</li>
             {%endfor%}
         </ul>
 
 
         <div>
-            <p class="fw-bolder">Add a book</p>
-            <div class="input-group">
-                <select class="form-select input-group" aria-label="Default select example">
-                    <option selected disabled>select Author</option>
-                    {% for authorli in authorsList%}
-                    {% for author in authors %}
+            <p id="test" class="fw-bolder">Add a book</p>
+            <form action="post">
+                <div class="input-group">
+                    <select class="form-select input-group" id="authorSelect" aria-label="Default select example">
+                        <option selected disabled>select Author</option>
+                        {% for authorli in authorsList%}
+                        {% if authors[0]!='undefined' %}
+                        {% for author in authors %}
+                        {% if authorli.firstname!=author.firstname %}
+                        <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
+                        {% endif %}
+                        {% else %}
+                        <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
+                        {% endfor %}
+                        {% endif %}
 
-                    {% if authorli.firstname!=author.firstname %}
-                    <option value="{{authorli.id}}">{{authorli.firstname}}</option>
-                    {% endif %}
-                    {% endfor %}
-                    {% endfor %}
-                </select>
-                <button type="button" class="btn btn-primary btn-lg">Add </button>
-            </div>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="addAuthor" class="btn btn-primary btn-lg">Add author </button>
+                </div>
+            </form>
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/axios.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
+    <script>
+        let book_id = $('#bookId').html();
+        book_id = parseInt(book_id[4])
+        $("button").click(async(e) => {
+            e.preventDefault();
+            const author_id = parseInt($("select:first").val());
+            // console.log(author_id);
+            // console.log(book_id);
+            try {
+                await axios.post(`http://localhost:3000/escribir/${book_id}/${author_id}`)
+                location.reload()
+            } catch (e) {
+                alert(e)
+            }
 
+        })
+    </script>
 </body>
 
 </html>

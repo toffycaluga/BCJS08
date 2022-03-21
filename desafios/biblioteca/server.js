@@ -43,9 +43,10 @@ app.get('/books/:book_id', async(req, res) => {
     try {
         const book = await readBookWithId(bookId)
         const authors = await searchAuthors(bookId)
+        console.log(authors[0]);
         const authorsList = await readAuthors();
-        console.log(authorsList);
-        console.log(authors);
+        // console.log(authorsList);
+        // console.log(authors);
         res.render('book.html', { book, authors, authorsList })
 
     } catch (err) {
@@ -83,7 +84,7 @@ app.post('/authors', async(req, res) => {
     await insertAuthors(data.firstname, data.lastname, data.notes)
 
     // const data=req.body;
-    res.status(201).redirect('/authors.html')
+    res.status(201).redirect('/authors')
 })
 
 app.post('/escribir/:book_id/:author_id', async(req, res) => {

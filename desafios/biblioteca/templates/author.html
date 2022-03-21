@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-3">
                     <h3>{{author.firstname}} {{author.lastname}}</h3>
-                    <p class="fw-bold">ID:{{author.id}}</p>
+                    <p id="authorId" class="fw-bold">ID:{{author.id}}</p>
                 </div>
                 <div class="col-9 text-left">
                     <p class="fw-bold">Notes:</p>
@@ -46,12 +46,17 @@
             <div class="input-group">
                 <select class="form-select input-group" aria-label="Default select example">
                     <option selected disabled>select book</option>
-                    {% for bookli in booksList %}
+                    {% for bookli in booksList%}
                     {% for book in books %}
-                    {% if bookli.title!=book.title %}
+                    <!-- {% if bookli.title!=book.title %} -->
+                    <option value="{{bookli.id}}">{{bookli.title}} </option>
+                    <!-- {% endif %} -->
+
+                    {% else %}
                     <option value="{{bookli.id}}">{{bookli.title}}</option>
-                    {% endif %}
                     {% endfor %}
+                    {% if books[0]=='undefined' %}
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <button type="button" class="btn btn-primary btn-lg">Add Book</button>
@@ -59,10 +64,27 @@
         </div>
 
     </div>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <!-- <script src="/axios.min.js"></script> -->
+    <script src="/axios.min.js"></script>
 
+    <script>
+        let author_id = $('#authorId').html();
+        author_id = parseInt(author_id[4])
+        $("button").click(async(e) => {
+            e.preventDefault();
+            const book_id = parseInt($("select:first").val());
+            // console.log(author_id);
+            // console.log(book_id);
+            try {
+                await axios.post(`http://localhost:3000/escribir/${author_id}/${book_id}`)
+                location.reload()
+            } catch (e) {
+                alert(e)
+            }
+
+        })
+    </script>
 </body>
 
 </html>
