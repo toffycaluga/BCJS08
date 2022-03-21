@@ -1,83 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Books & Authors</title>
-</head>
-
-<body>
-    <div class="container mt-4">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="/">Books</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/authors">Authors</a>
-            </li>
-        </ul>
-    </div>
-    <div class="container mt-4">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3">
-                    <h3>{{author.firstname}} {{author.lastname}}</h3>
-                    <p id="authorId" class="fw-bold">ID:{{author.id}}</p>
-                </div>
-                <div class="col-9 text-left">
-                    <p class="fw-bold">Notes:</p>
-                    <p class="pw-lighter">{{author.notes}}</p>
-                </div>
+{% extends "layout.html" %} {%block style%}
+<link rel="stylesheet" href="../css/bootstrap.min.css"> {%endblock%}{%block main%}
+<div class="container mt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <h3>{{author.firstname}} {{author.lastname}}</h3>
+                <p id="authorId" class="fw-bold">ID:{{author.id}}</p>
+            </div>
+            <div class="col-9 text-left">
+                <p class="fw-bold">Notes:</p>
+                <p class="pw-lighter">{{author.notes}}</p>
             </div>
         </div>
-        <div>
-            <p class="fw-bold mt-2">Books</p>
-            <ul class="list-group list-group-flush">
-                {%for book in books%}
-                <li class="list-group-item">{{book.title}}</li>
-                {%endfor%}
-            </ul>
-        </div>
-        <div>
-            <p class="fw-bolder">Add a book</p>
-            <form action="/writeAuthor/{{author.id}}/" method="post">
-                <div class="input-group">
-                    <select name="book_id" class="form-select input-group" aria-label="Default select example">
-                        <option selected disabled>select book</option>
-                        {% for bookli in booksList%}
-                        <option value="{{bookli.id}}">{{bookli.title}} </option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-lg">Add Book</button>
-                </div>
-            </form>
-        </div>
-
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/axios.min.js"></script>
+    <div>
+        <p class="fw-bold mt-2">Books</p>
+        <ul class="list-group list-group-flush">
+            {%for book in books%}
+            <li class="list-group-item">{{book.title}}</li>
+            {%endfor%}
+        </ul>
+    </div>
+    <div>
+        <p class="fw-bolder">Add a book</p>
+        <form action="/writeAuthor/{{author.id}}/" method="post">
+            <div class="input-group">
+                <select name="book_id" class="form-select input-group" aria-label="Default select example">
+                    <option selected disabled>select book</option>
+                    {% for bookli in booksList%}
+                    <option value="{{bookli.id}}">{{bookli.title}} </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary btn-lg">Add Book</button>
+            </div>
+        </form>
+    </div>
 
-    <script>
-        // let author_id = $('#authorId').html();
-        // author_id = parseInt(author_id[4])
-        // $("button").click(async(e) => {
-        //     e.preventDefault();
-        //     const book_id = parseInt($("select:first").val());
-        //     // console.log(author_id);
-        //     // console.log(book_id);
-        //     try {
-        //         await axios.post(`http://localhost:3000/escribir/${book_id}/${author_id}`)
-        //         location.reload()
-        //     } catch (e) {
-        //         alert(e)
-        //     }
-
-        // })
-    </script>
-</body>
-
-</html>
+</div>
+{%endblock%} {%block css%}
+<script src="../js/bootstrap.min.js"></script>{%endblock%}

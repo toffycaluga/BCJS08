@@ -1,66 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}{%block style%}
+<link rel="stylesheet" href="./css/bootstrap.min.css"> {%endblock%} {%block main%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <title>Books & Authors</title>
-</head>
-
-<body>
-    <div class="container mt-4">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="/">Books</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/authors">Authors</a>
-            </li>
-        </ul>
-    </div>
-    <div class="container mt-4">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3">
-                    <h3>{{book.title}}</h3>
-                    <p class="fw-bold" id="bookId">ID: {{book.id}}</p>
-                </div>
-                <div class="col-9 ">
-                    <p class="fw-bold">Description:</p>
-                    <p class="pw-lighter">{{book.description}}</p>
-                </div>
+<div class="container mt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <h3>{{book.title}}</h3>
+                <p class="fw-bold" id="bookId">ID: {{book.id}}</p>
+            </div>
+            <div class="col-9 ">
+                <p class="fw-bold">Description:</p>
+                <p class="pw-lighter">{{book.description}}</p>
             </div>
         </div>
-        <p class="fw-bold">Authors:</p>
-        <ul class="list-group list-group-flush">
-            {%for author in authors%}
-            <li class="list-group-item fs-4">{{author.firstname}} {{author.lastname}}</li>
-            {%endfor%}
-        </ul>
-
-
-        <div>
-            <p id="test" class="fw-bolder">Add a book</p>
-            <form action="/writeBook/{{book.id}}" method="post">
-                <div class="input-group">
-                    <select name="author_id" class="form-select input-group" id="authorSelect" aria-label="Default select example">
-                        <option selected disabled>select Author</option>
-                        {% for authorli in authorsList%}
-                        <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-lg">Add author </button>
-                </div>
-            </form>
-        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="/axios.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <p class="fw-bold">Authors:</p>
+    <ul class="list-group list-group-flush">
+        {%for author in authors%}
+        <li class="list-group-item fs-4">{{author.firstname}} {{author.lastname}}</li>
+        {%endfor%}
+    </ul>
 
 
-</body>
-
-</html>
+    <div>
+        <p id="test" class="fw-bolder">Add a book</p>
+        <form action="/writeBook/{{book.id}}" method="post">
+            <div class="input-group">
+                <select name="author_id" class="form-select input-group" id="authorSelect" aria-label="Default select example">
+                    <option selected disabled>select Author</option>
+                    {% for authorli in authorsList%}
+                    <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary btn-lg">Add author </button>
+            </div>
+        </form>
+    </div>
+</div>
+{%endblock%}{%block script%}
+<script src="./js/bootstrap.min.js"></script>{%endblock%}

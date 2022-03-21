@@ -1,82 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Books & Authors</title>
-</head>
-
-<body>
-    <div class="container mt-4">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="/">Books</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Authors</a>
-            </li>
-        </ul>
-    </div>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-6">
-                <h3>Add an Author</h3>
-                <form action="/authors" method="post">
+{% extends "layout.html" %} {%block style%}
+<link rel="stylesheet" href="./css/bootstrap.min.css"> {%endblock%} {%block main%}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-6">
+            <h3>Add an Author</h3>
+            <form action="/authors" method="post">
+                <div class="mb-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Firstname</span>
+                        <input type="text" name="firstname" id="firstname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
                     <div class="mb-3">
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Firstname</span>
-                            <input type="text" name="firstname" id="firstname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Lastname</span>
+                            <input type="text" name="lastname" id="lastname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         </div>
-                        <div class="mb-3">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Lastname</span>
-                                <input type="text" name="lastname" id="lastname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                            </div>
 
+                    </div>
+                    <div class="mb-3">
+
+                        <div class="input-group">
+                            <span class="input-group-text">notes</span>
+                            <textarea class="form-control" aria-label="With textarea" name="notes" id="notes"></textarea>
                         </div>
-                        <div class="mb-3">
-
-                            <div class="input-group">
-                                <span class="input-group-text">notes</span>
-                                <textarea class="form-control" aria-label="With textarea" name="notes" id="notes"></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                </form>
-                </div>
-            </div>
-            <div class="col-6">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Author</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="authors">
-                        {%for author in authors %}
-                        <tr>
-                            <td>{{author.id}}</td>
-                            <td>{{author.firstname}} {{author.lastname}}</td>
-                            <td>
-                                <a href="/authors/{{author.id}}">view</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-                </table>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+            </form>
             </div>
         </div>
+        <div class="col-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Author</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="authors">
+                    {%for author in authors %}
+                    <tr>
+                        <td>{{author.id}}</td>
+                        <td>{{author.firstname}} {{author.lastname}}</td>
+                        <td>
+                            <a href="/authors/{{author.id}}">view</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- <script src="axios.min.js"></script>1 -->
-
-</body>
-
-</html>
+</div>
+{%endblock%} {%block script%}
+<script src="./js/bootstrap.min.js"></script>{%endblock%}
