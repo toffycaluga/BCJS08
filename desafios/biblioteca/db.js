@@ -73,6 +73,7 @@ export async function insertBookAuthor(author_id, book_id) {
             values: [author_id, book_id],
             name: 'insert-author-book'
         })
+        client.release()
     } catch (err) {
         console.log(err);
     }
@@ -136,7 +137,7 @@ export async function searchAuthorsNotbooks(bookId) {
     const client = await pool.connect();
     try {
         const { rows } = await client.query({
-            text: `select id,firstname,lastname from books where id not in(select author_id from books_authors where book_id=$1);`,
+            text: `select id,firstname,lastname from authors where id not in(select author_id from books_authors where book_id=$1);`,
             values: [bookId],
             name: 'select-search-not-authors'
         })

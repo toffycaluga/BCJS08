@@ -43,9 +43,9 @@
         </div>
         <div>
             <p class="fw-bolder">Add a book</p>
-            <form action="/escribir/{{author.id}}/" method="post">
+            <form action="/writeAuthor/{{author.id}}/" method="post">
                 <div class="input-group">
-                    <select class="form-select input-group" aria-label="Default select example">
+                    <select name="book_id" class="form-select input-group" aria-label="Default select example">
                         <option selected disabled>select book</option>
                         {% for bookli in booksList%}
                         <option value="{{bookli.id}}">{{bookli.title}} </option>

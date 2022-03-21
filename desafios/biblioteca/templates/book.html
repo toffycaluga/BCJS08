@@ -43,16 +43,15 @@
 
         <div>
             <p id="test" class="fw-bolder">Add a book</p>
-            <form action="post">
+            <form action="/writeBook/{{book.id}}" method="post">
                 <div class="input-group">
-                    <select class="form-select input-group" id="authorSelect" aria-label="Default select example">
+                    <select name="author_id" class="form-select input-group" id="authorSelect" aria-label="Default select example">
                         <option selected disabled>select Author</option>
                         {% for authorli in authorsList%}
                         <option value="{{authorli.id}}">{{authorli.firstname}} {{authorli.lastname}}</option>
-
                         {% endfor %}
                     </select>
-                    <button type="button" id="addAuthor" class="btn btn-primary btn-lg">Add author </button>
+                    <button type="submit" class="btn btn-primary btn-lg">Add author </button>
                 </div>
             </form>
         </div>
@@ -61,23 +60,7 @@
     <script src="/axios.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
-    <script>
-        let book_id = $('#bookId').html();
-        book_id = parseInt(book_id[4])
-        $("button").click(async(e) => {
-            e.preventDefault();
-            const author_id = parseInt($("select:first").val());
-            // console.log(author_id);
-            // console.log(book_id);
-            try {
-                await axios.post(`http://localhost:3000/escribir/${book_id}/${author_id}`)
-                location.reload()
-            } catch (e) {
-                alert(e)
-            }
 
-        })
-    </script>
 </body>
 
 </html>

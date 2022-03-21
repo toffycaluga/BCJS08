@@ -46,13 +46,11 @@ app.get('/books/:book_id', async(req, res) => {
         const authors = await searchAuthors(bookId)
         console.log(authors[0]);
         const authorsList = await searchAuthorsNotbooks(bookId);
-        // console.log(authorsList);
-        // console.log(authors);
+        console.log(authorsList);
         res.render('book.html', { book, authors, authorsList })
 
     } catch (err) {
         console.log(err);
-        // res.json(err)
 
     }
 })
@@ -85,22 +83,22 @@ app.post('/authors', async(req, res) => {
     const data = req.body
     await insertAuthors(data.firstname, data.lastname, data.notes)
 
-    // const data=req.body;
     res.status(201).redirect('/authors')
 })
 
-app.post('/escribir/:author_id', async(req, res) => {
-        const datos = req.params
-        console.log(req);
-        console.log(req.params);
-        let body = ""
-        req.on('data', data => body += data)
-        req.on('end', async() => {
-                console.log(body);
-            })
-            // await insertBookAuthor(datos.author_id, datos.book_id)
+app.post('/writeAuthor/:author_id', async(req, res) => {
+    const author_id = parseInt(req.params.author_id)
+    const book_id = parseInt(req.body.book_id)
 
-        res.json({ todo: 'ok' })
+    await insertBookAuthor(author_id, book_id)
+
+    res.redirect(`/authors/${author_id}`)
+})
+app.post('/writeBook/:book_id', async(req, res) => {
+        const author_id = req.body.author_id
+        const book_id = req.params.book_id
+        await insertBookAuthor(author_id, book_id)
+        res.redirect(`/books/${book_id}`)
     })
     // app.use('/api', router, )
 
